@@ -3,6 +3,8 @@
 
 #include <AnalyzerSettings.h>
 #include <AnalyzerTypes.h>
+#include <QuadSPITypes.h>
+
 class QuadSPIAnalyzerSettings : public AnalyzerSettings
 {
 public:
@@ -14,14 +16,6 @@ public:
 	virtual void LoadSettings( const char* settings );
 	virtual const char* SaveSettings();
 
-	enum Mode{
-		QuadSPI,
-		QuadIO,
-		QPI
-	};
-
-	Channel mInputChannel;
-	U32 mBitRate;
 	Channel mClockChannel;
 	Channel mEnableChannel;
 	Channel mD0Channel;
@@ -31,15 +25,16 @@ public:
 	
 	BitState mEnableActiveState;
 	BitState mClockInactiveState;
-	AnalyzerEnums::Edge mDataValidEdge;
+
 	AnalyzerEnums::ShiftOrder mShiftOrder;
+	AnalyzerEnums::QSpiMode mQuadSpiMode;
+	
 	U32	mBytesPerTransfer;
 	U8 	mAddressByteLength;
-	/*QuadSpiEnums::*/Mode mQuadSpiMode;
+	U8  mDummyCycles;
+	
 
 protected:
-	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mInputChannelInterface;
-	std::auto_ptr< AnalyzerSettingInterfaceInteger > 	mBitRateInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mClockChannelInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mEnableChannelInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mD0ChannelInterface;
@@ -49,10 +44,11 @@ protected:
 
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mEnableActiveStateInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mClockInactiveStateInterface;
-	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mDataValidEdgeInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mShiftOrderInterface;
+	
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mBytesPerTransferInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mAddressByteLengthInterface; 
+	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mDummyCyclesInterface; 
 	std::auto_ptr< AnalyzerSettingInterfaceNumberList >	mQuadSpiModeInterface; 
 
 };
