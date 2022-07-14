@@ -51,8 +51,8 @@ os.chdir( source_path )
 
 files = dict()
 
-cpp_files = glob.glob( "*.cpp" );
-h_files = glob.glob( "*.h" );
+cpp_files = glob.glob( "*.cpp" )
+h_files = glob.glob( "*.h" )
 
 for file in cpp_files:
     files[file] = ".cpp"
