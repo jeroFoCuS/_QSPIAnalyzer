@@ -136,7 +136,7 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 
 	//Specify to the SDK which channels are in use
 	ClearChannels();
-	AddChannel( mClockChannel, "CLOCK", false ); //false since we specified UNDEFINED_CHANNEL as a default.
+	AddChannel( mClockChannel, "Clock", false ); //false since we specified UNDEFINED_CHANNEL as a default.
 	AddChannel( mEnableChannel, "Enable", false );
 	AddChannel( mD0Channel, "D0", false );
 	AddChannel( mD1Channel, "D1", false );

@@ -41,14 +41,9 @@ public:
 	U32	mBytesPerTransfer;
 	U8 	mAddressByteLength;
 	U8  mDummyCycles;
-
-	Channel mInputChannel;
-	U32 mBitRate;
 	
 
 protected:
-	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mInputChannelInterface;
-	std::auto_ptr< AnalyzerSettingInterfaceInteger >	mBitRateInterface;
 
 	//Interface objects for every parameter that our analyzer will need to use
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mClockChannelInterface;
