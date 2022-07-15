@@ -5,6 +5,14 @@
 #include <AnalyzerTypes.h>
 #include <QuadSPITypes.h>
 
+/**
+ * @brief Our QuadSPI Analyzer Settings class
+ * 
+ * Inherits most of its fun tions from the AnalyzerSettings class form the SDK.
+ * Here, we have to define all the channels, integer values, enums or any other
+ * configurable parameter that our analyzer will need to use.
+ * 
+ */
 class QuadSPIAnalyzerSettings : public AnalyzerSettings
 {
 public:
@@ -16,6 +24,7 @@ public:
 	virtual void LoadSettings( const char* settings );
 	virtual const char* SaveSettings();
 
+	//Parameters/objects that our analyzer use. This is to said, the channels, const values, etc...
 	Channel mClockChannel;
 	Channel mEnableChannel;
 	Channel mD0Channel;
@@ -35,6 +44,7 @@ public:
 	
 
 protected:
+	//Interface objects for every parameter that our analyzer will need to use
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mClockChannelInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mEnableChannelInterface;
 	std::auto_ptr< AnalyzerSettingInterfaceChannel >	mD0ChannelInterface;
