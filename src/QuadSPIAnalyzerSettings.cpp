@@ -26,7 +26,8 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 	mQuadSpiMode(AnalyzerEnums::RAW),
 
 	mBytesPerTransfer(1),
-	mAddressByteLength(3)
+	mAddressByteLength(3),
+	mDummyCycles(4)
 {
 	//We configure the parameters and options that each interface object will display in the GUI
 	mClockChannelInterface.reset( new AnalyzerSettingInterfaceChannel() );
@@ -72,7 +73,7 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 	mShiftOrderInterface->SetNumber(mShiftOrder);
 
 	mQuadSpiModeInterface.reset( new AnalyzerSettingInterfaceNumberList() );
-	mQuadSpiModeInterface->SetTitleAndTooltip( "Significant bit", "" );
+	mQuadSpiModeInterface->SetTitleAndTooltip( "Quad SPI mode", "" );
 	mQuadSpiModeInterface->AddNumber(AnalyzerEnums::QuadSPI, "Opcode and adress send in line D0", "");
 	mQuadSpiModeInterface->AddNumber(AnalyzerEnums::QuadIO, "Opcode send in line D0", "");
 	mQuadSpiModeInterface->AddNumber(AnalyzerEnums::QPI, "All data send over the four data lines", "");
@@ -85,7 +86,7 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 	{
 		std::stringstream ss;
 
-		ss << i << "bytes";
+		ss << i << " bytes";
 		mBytesPerTransferInterface->AddNumber(i, ss.str().c_str(), "");
 	}
 	mBytesPerTransferInterface->SetNumber(mBytesPerTransfer);
@@ -96,8 +97,8 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 	{
 		std::stringstream ss;
 
-		ss << i << "bytes";
-		mBytesPerTransferInterface->AddNumber(i, ss.str().c_str(), "");
+		ss << i << " bytes";
+		mAddressByteLengthInterface->AddNumber(i, ss.str().c_str(), "");
 	}
 	mAddressByteLengthInterface->SetNumber(mAddressByteLength);
 
@@ -107,7 +108,7 @@ QuadSPIAnalyzerSettings::QuadSPIAnalyzerSettings()
 	{
 		std::stringstream ss;
 
-		ss << i << "cycles";
+		ss << i << " cycles";
 		mDummyCyclesInterface->AddNumber(i, ss.str().c_str(), "");
 	}
 	mDummyCyclesInterface->SetNumber(mDummyCycles);
@@ -170,7 +171,7 @@ bool QuadSPIAnalyzerSettings::SetSettingsFromInterfaces()
 	channels.push_back(d2);
 	channels.push_back(d3);
 
-	if( AnalyzerHelpers::DoChannelsOverlap(&channels[0], channel.size() ) == true)
+	if( AnalyzerHelpers::DoChannelsOverlap(&channels[0], channels.size() ) == true)
 	{
 		SetErrorText( "Channels overlap, please set diferent channels for each input");
 		return false;
@@ -192,7 +193,7 @@ bool QuadSPIAnalyzerSettings::SetSettingsFromInterfaces()
 
 
 	mBytesPerTransfer 	= U32( mBytesPerTransferInterface->GetNumber() );
-	mAddressByteLength 	= U8( mAddressBytesLengthInterface->GetNumber() );
+	mAddressByteLength 	= U8( mAddressByteLengthInterface->GetNumber() );
 	mDummyCycles 		= U8( mDummyCyclesInterface->GetNumber() );
 
 	mQuadSpiMode 		= (AnalyzerEnums::QSpiMode) U32(mQuadSpiModeInterface->GetNumber()); 
@@ -201,7 +202,7 @@ bool QuadSPIAnalyzerSettings::SetSettingsFromInterfaces()
 	mEnableActiveState 	= (BitState) U32( mEnableActiveStateInterface->GetNumber() );
 
 	ClearChannels();
-	AddChannel( mClockChannel, "Clock", mClockCannel != UNDEFINED_CHANNEL );
+	AddChannel( mClockChannel, "Clock", mClockChannel != UNDEFINED_CHANNEL );
 	AddChannel( mEnableChannel, "Enable", mEnableChannel != UNDEFINED_CHANNEL );
 	AddChannel( mD0Channel, "D0", mD0Channel != UNDEFINED_CHANNEL );
 	AddChannel( mD1Channel, "D1", mD1Channel != UNDEFINED_CHANNEL );
